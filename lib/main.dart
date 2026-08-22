@@ -26,7 +26,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Building HomePage");
     return Scaffold(
       appBar: AppBar(title: Text("Flutter App")),
       body: Consumer<CounterNotifier>(
