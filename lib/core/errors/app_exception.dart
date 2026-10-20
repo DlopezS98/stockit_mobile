@@ -27,3 +27,7 @@ class ParsingException extends AppException {
 class UnauthorizedException extends AppException {
   const UnauthorizedException([super.message = 'Your session has expired. Please log in again.']);
 }
+
+class NotFoundException extends AppException {
+  const NotFoundException([super.message = 'The requested resource was not found.']);
+}
