@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:stockit_mobile/core/di/injection.dart';
 import 'package:stockit_mobile/presentation/providers/auth_provider.dart';
+import 'package:stockit_mobile/presentation/screens/login/login_screen.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -22,7 +23,11 @@ class StockitApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My First Flutter Application',
-      home: Center(child: Text("Welcome to the Flutter App")),
+      home: Scaffold(
+        body: const Center(
+          child: LoginScreen(),
+        ),
+      ),
     );
   }
 }
