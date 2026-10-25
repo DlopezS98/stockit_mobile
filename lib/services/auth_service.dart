@@ -3,13 +3,13 @@ import 'package:stockit_mobile/data/models/token_model.dart';
 // import 'package:stockit_mobile/data/models/token_model.dart';
 import 'package:stockit_mobile/data/models/user_model.dart';
 import 'package:stockit_mobile/data/repositories/auth_repository.dart';
+import 'package:stockit_mobile/data/repositories/token_repository.dart';
 
 class AuthService {
   final AuthRepository _authRepository;
-  // final TokenService _tokenService;
+  final TokenRepository _tokenRepository;
 
-  // AuthService(this._authRepository, this._tokenService);
-  AuthService(this._authRepository);
+  AuthService(this._authRepository, this._tokenRepository);
 
   Future<void> login(String email, String password) async {
     final trimmedEmail = email.trim();
@@ -30,6 +30,7 @@ class AuthService {
     }
 
     final TokenModel token = await _authRepository.login(email, password);
+    await _tokenRepository.saveToken(token);
   }
 
   Future<UserModel> getCurrentUser() async {
