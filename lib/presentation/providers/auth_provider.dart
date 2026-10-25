@@ -24,8 +24,11 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       await _authService.login(email, password);
+      // await Future.delayed(const Duration(seconds: 3));
       _authStatus = AuthStatus.authenticated;
     } on AppException catch (e) {
+      _errorMessage = e.message;
+    } on FormatException catch (e) {
       _errorMessage = e.message;
     } catch (e) {
       _errorMessage = 'An unexpected error occurred. Please try again.';
