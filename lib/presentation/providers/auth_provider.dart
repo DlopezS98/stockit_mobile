@@ -46,6 +46,9 @@ class AuthProvider extends ChangeNotifier {
     try {
       // await Future.delayed(const Duration(seconds: 3));
       final bool isAuthenticated = await _authService.isLoggedIn();
+      if (isAuthenticated) {
+        _currentUser = await _authService.getCurrentUser();
+      }
       _authStatus = isAuthenticated
           ? AuthStatus.authenticated
           : AuthStatus.unauthenticated;
