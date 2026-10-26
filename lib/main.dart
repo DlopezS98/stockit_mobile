@@ -6,6 +6,8 @@ import 'package:stockit_mobile/presentation/providers/auth_provider.dart';
 import 'package:stockit_mobile/presentation/screens/login/login_screen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load();
   setupDependencies();
 
