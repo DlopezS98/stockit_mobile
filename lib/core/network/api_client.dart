@@ -4,8 +4,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:stockit_mobile/core/constants/api_constants.dart';
 import 'package:stockit_mobile/core/errors/app_exception.dart';
+import 'package:stockit_mobile/data/models/token_model.dart';
+
+typedef AuthTokenProvider = Future<TokenModel?> Function();
 
 class ApiClient {
+  final AuthTokenProvider? _authTokenProvider;
+  ApiClient({this._authTokenProvider});
+
   final http.Client _client = http.Client();
 
   Future<dynamic> get(String path, { Map<String, String>? query }) async => _send('GET', path, query, null);
@@ -16,9 +22,14 @@ class ApiClient {
   Future<dynamic> _send(String method, String path, Map<String, String>? query, Object? body) async {
     final baseUrl = ApiConstants.instance.baseUrl;
     final uri = Uri.parse('$baseUrl$path').replace(queryParameters: query);
-    final headers = {'Content-Type': 'application/json'};
+    final Map<String, String> headers = {};
     if (body != null) {
       headers['Content-Type'] = 'application/json';
+    }
+
+    TokenModel? token = await _authTokenProvider?.call();
+    if (token != null && !token.isAccessTokenExpired) {
+      headers['Authorization'] = 'Bearer ${token.accessToken}';
     }
 
     final request = http.Request(method, uri)..headers.addAll(headers);
