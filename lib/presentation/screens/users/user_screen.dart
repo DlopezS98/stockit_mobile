@@ -16,7 +16,14 @@ class UserScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Screen'),
-        actions: const [_CurrentUserAvatar()],
+        actions: [
+          _CurrentUserAvatar(),
+          IconButton(
+            tooltip: 'Log out',
+            icon: const Icon(Icons.logout),
+            onPressed: context.read<AuthProvider>().logout,
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
