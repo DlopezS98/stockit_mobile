@@ -5,7 +5,7 @@ import 'package:stockit_mobile/services/user_service.dart';
 enum ViewStatus { initial, loading, success, error }
 
 class UserProvider extends ChangeNotifier {
-  final List<UserModel> _users = [];
+  List<UserModel> _users = [];
   List<UserModel> get users => _users;
 
   ViewStatus _viewStatus = ViewStatus.initial;
@@ -24,8 +24,8 @@ class UserProvider extends ChangeNotifier {
 
     try {
       // Simulate a network request
-      await Future.delayed(const Duration(seconds: 2));
-      _users.addAll([
+      await Future.delayed(const Duration(seconds: 3));
+      _users = [
         UserModel(
           id: 1,
           email: 'john.doe@example.com',
@@ -53,7 +53,7 @@ class UserProvider extends ChangeNotifier {
           roleName: 'User',
           username: 'bobjohnson'
         )
-      ]);
+      ];
       _viewStatus = ViewStatus.success;
     } catch (e) {
       _errorMessage = e.toString();
