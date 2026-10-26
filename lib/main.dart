@@ -45,7 +45,7 @@ class _AuthGuard extends StatelessWidget {
     switch (authProvider.authStatus) {
       case AuthStatus.authenticated:
         return ChangeNotifierProvider(
-          create: (_) => getIt<UserProvider>(),
+          create: (_) => getIt<UserProvider>()..fetchUsers(),
           child: const UserScreen(),
         );
       case AuthStatus.unauthenticated:
