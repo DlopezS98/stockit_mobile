@@ -11,7 +11,10 @@ import 'package:stockit_mobile/services/user_service.dart';
 final getIt = GetIt.instance;
 
 void setupDependencies() {
-  getIt.registerLazySingleton<ApiClient>(() => ApiClient(), dispose: (client) => client.dispose());
+  getIt.registerLazySingleton<ApiClient>(
+    () => ApiClient(authTokenProvider: () => getIt<TokenRepository>().getToken()),
+    dispose: (client) => client.dispose(),
+  );
 
   // Register repositories
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepository(getIt<ApiClient>()));
