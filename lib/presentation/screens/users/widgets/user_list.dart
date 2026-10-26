@@ -20,15 +20,18 @@ class _UserList extends StatelessWidget {
         if (userProvider.users.isEmpty) {
           return const Center(child: Text('No users found.'));
         }
-        return ListView.builder(
-          itemCount: userProvider.users.length,
-          itemBuilder: (context, index) {
-            final user = userProvider.users[index];
-            return ListTile(
-              title: Text(user.fullName),
-              subtitle: Text(user.email),
-            );
-          },
+        return RefreshIndicator(
+          onRefresh: () => userProvider.fetchUsers(),
+          child: ListView.builder(
+            itemCount: userProvider.users.length,
+            itemBuilder: (context, index) {
+              final user = userProvider.users[index];
+              return ListTile(
+                title: Text(user.fullName),
+                subtitle: Text(user.email),
+              );
+            },
+          ),
         );
     }
   }
