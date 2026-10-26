@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stockit_mobile/data/models/user_model.dart';
+import 'package:stockit_mobile/services/user_service.dart';
 
 enum ViewStatus { initial, loading, success, error }
 
@@ -12,6 +13,9 @@ class UserProvider extends ChangeNotifier {
 
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
+
+  final UserService _userService;
+  UserProvider(this._userService);
 
 
   Future<void> fetchUsers() async {
