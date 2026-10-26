@@ -10,39 +10,11 @@ class _UserList extends StatelessWidget {
     switch (userProvider.viewStatus) {
       case ViewStatus.initial:
       case ViewStatus.loading:
-        return const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 16.0),
-              Text('Loading users...'),
-            ],
-          ),
-        );
+        return LoadingView(message: 'Loading users...');
       case ViewStatus.error:
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.error, color: Colors.red, size: 48.0),
-                Text(
-                  'Error: ${userProvider.errorMessage}',
-                  style: const TextStyle(color: Colors.red),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    userProvider.fetchUsers();
-                  },
-                  child: const Text('Retry'),
-                ),
-              ],
-            ),
-          ),
+        return ErrorView(
+          errorMessage: userProvider.errorMessage ?? 'Unknown error',
+          onRetry: () => userProvider.fetchUsers(),
         );
       case ViewStatus.success:
         if (userProvider.users.isEmpty) {
