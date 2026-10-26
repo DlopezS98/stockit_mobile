@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stockit_mobile/core/di/injection.dart';
 import 'package:stockit_mobile/presentation/providers/auth_provider.dart';
 import 'package:stockit_mobile/presentation/screens/login/login_screen.dart';
+import 'package:stockit_mobile/presentation/screens/users/user_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class _AuthGuard extends StatelessWidget {
     var authProvider = context.watch<AuthProvider>();
     switch (authProvider.authStatus) {
       case AuthStatus.authenticated:
-        return const Center(child: Text('Authenticated'));
+        return const UserScreen();
       case AuthStatus.unauthenticated:
         return const LoginScreen();
       // case AuthStatus.unknown:
