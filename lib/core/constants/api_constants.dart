@@ -12,6 +12,7 @@ class ApiConstants {
   static const String products = '/products';
   static const String login = '/auth/login';
   static const String me = '/auth/me';
+  static const String logout = '/auth/logout';
 
   static const Duration timeoutDuration = Duration(seconds: 30);
 }
