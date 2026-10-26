@@ -12,6 +12,14 @@ class TokenRepository {
     await _sharedPreferences.setString(_tokenKey, jsonString);
   }
 
+  Future<TokenModel> ensureToken() async {
+    final TokenModel? token = await getToken();
+    if (token == null) {
+      throw Exception('No valid token found');
+    }
+    return token;
+  }
+
   Future<TokenModel?> getToken() async {
     final String? rawJson = await _sharedPreferences.getString(_tokenKey);
     if (rawJson == null) return null;
