@@ -40,13 +40,14 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> checkSession() async {
     try {
+      // await Future.delayed(const Duration(seconds: 3));
       final bool isAuthenticated = await _authService.isLoggedIn();
       _authStatus = isAuthenticated
           ? AuthStatus.authenticated
           : AuthStatus.unauthenticated;
     } catch (e) {
       _errorMessage = 'An unexpected error occurred. Please try again.';
-      _authStatus = AuthStatus.unknown;
+      _authStatus = AuthStatus.unauthenticated;
     } finally {
       notifyListeners();
     }

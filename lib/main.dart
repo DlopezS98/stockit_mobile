@@ -9,7 +9,7 @@ Future<void> main() async {
   await dotenv.load();
   setupDependencies();
 
-  await getIt<AuthProvider>().checkSession();
+  getIt<AuthProvider>().checkSession();
 
   runApp(
     ChangeNotifierProvider(
@@ -26,7 +26,26 @@ class StockitApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My First Flutter Application',
-      home: Scaffold(body: const Center(child: LoginScreen())),
+      home: Scaffold(body: _AuthGuard()),
     );
+  }
+}
+
+class _AuthGuard extends StatelessWidget {
+  const _AuthGuard();
+
+  @override
+  Widget build(BuildContext context) {
+    // Splash screens
+    var authProvider = context.watch<AuthProvider>();
+    switch (authProvider.authStatus) {
+      case AuthStatus.authenticated:
+        return const Center(child: Text('Authenticated'));
+      case AuthStatus.unauthenticated:
+        return const LoginScreen();
+      // case AuthStatus.unknown:
+      default:
+        return const Center(child: CircularProgressIndicator());
+    }
   }
 }
