@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stockit_mobile/presentation/providers/user_provider.dart';
+part 'widgets/user_list.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
@@ -7,14 +10,23 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('User Screen')),
-      body: const Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('User Screen')],
-          ),
+      body: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Search',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            const Expanded(child: _UserList()),
+          ],
         ),
       ),
     );
   }
 }
+
