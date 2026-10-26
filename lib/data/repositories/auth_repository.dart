@@ -27,4 +27,8 @@ class AuthRepository {
 
     return UserModel.fromJson(json);
   }
+
+  Future<void> logout(TokenModel token) async {
+    await _apiClient.post(ApiConstants.logout, body: token.toLogoutRequest());
+  }
 }
