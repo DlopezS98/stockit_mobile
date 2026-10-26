@@ -11,7 +11,7 @@ class AuthService {
 
   AuthService(this._authRepository, this._tokenRepository);
 
-  Future<void> login(String email, String password) async {
+  Future<UserModel> login(String email, String password) async {
     final trimmedEmail = email.trim();
     final trimmedPassword = password.trim();
 
@@ -31,6 +31,7 @@ class AuthService {
 
     final TokenModel token = await _authRepository.login(email, password);
     await _tokenRepository.saveToken(token);
+    return await _authRepository.currentUser();
   }
 
   Future<UserModel> getCurrentUser() async {

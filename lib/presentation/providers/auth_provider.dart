@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stockit_mobile/core/errors/app_exception.dart';
+import 'package:stockit_mobile/data/models/user_model.dart';
 import 'package:stockit_mobile/services/auth_service.dart';
 
 enum AuthStatus { authenticated, unauthenticated, unknown }
@@ -7,6 +8,8 @@ enum AuthStatus { authenticated, unauthenticated, unknown }
 class AuthProvider extends ChangeNotifier {
   final AuthService _authService;
   AuthProvider(this._authService);
+  UserModel? _currentUser;
+  UserModel? get currentUser => _currentUser;
 
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
@@ -23,9 +26,10 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _authService.login(email, password);
+      UserModel user = await _authService.login(email, password);
       // await Future.delayed(const Duration(seconds: 3));
       _authStatus = AuthStatus.authenticated;
+      _currentUser = user;
     } on AppException catch (e) {
       _errorMessage = e.message;
     } on FormatException catch (e) {
