@@ -4,11 +4,11 @@ class TokenModel {
   final DateTime accessTokenExpiresAt;
   final DateTime refreshTokenExpiresAt;
 
-  TokenModel({ 
-    required this.accessToken, 
-    required this.refreshToken, 
-    required this.accessTokenExpiresAt, 
-    required this.refreshTokenExpiresAt 
+  TokenModel({
+    required this.accessToken,
+    required this.refreshToken,
+    required this.accessTokenExpiresAt,
+    required this.refreshTokenExpiresAt,
   });
 
   bool get isAccessTokenExpired => DateTime.now().isAfter(accessTokenExpiresAt);
@@ -29,5 +29,9 @@ class TokenModel {
       'expiresAt': accessTokenExpiresAt.toIso8601String(),
       'refreshTokenExpiresAt': refreshTokenExpiresAt.toIso8601String(),
     };
+  }
+
+  Map<String, String> toLogoutRequest() {
+    return {'refreshToken': refreshToken};
   }
 }
