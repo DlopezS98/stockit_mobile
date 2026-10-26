@@ -8,6 +8,9 @@ import 'package:stockit_mobile/presentation/screens/login/login_screen.dart';
 Future<void> main() async {
   await dotenv.load();
   setupDependencies();
+
+  await getIt<AuthProvider>().checkSession();
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => getIt<AuthProvider>(),
@@ -23,11 +26,7 @@ class StockitApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My First Flutter Application',
-      home: Scaffold(
-        body: const Center(
-          child: LoginScreen(),
-        ),
-      ),
+      home: Scaffold(body: const Center(child: LoginScreen())),
     );
   }
 }
