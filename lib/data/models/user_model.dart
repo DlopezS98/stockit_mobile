@@ -22,10 +22,10 @@ class UserModel {
       id: json['id'] as int,
       username: json['username'] as String,
       email: json['email'] as String,
-      fullName: json['full_name'] as String,
-      roleId: json['role_id'] as int,
-      roleName: json['role_name'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      fullName: json['fullName'] as String,
+      roleId: json['roleId'] as int,
+      roleName: json['roleName'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
     );
   }
 
@@ -34,10 +34,10 @@ class UserModel {
       'id': id,
       'username': username,
       'email': email,
-      'full_name': fullName,
-      'role_id': roleId,
-      'role_name': roleName,
-      'created_at': createdAt.toIso8601String(),
+      'fullName': fullName,
+      'roleId': roleId,
+      'roleName': roleName,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 }
