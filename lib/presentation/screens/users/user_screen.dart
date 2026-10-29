@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stockit_mobile/core/constants/view_status.dart';
 import 'package:stockit_mobile/presentation/providers/user_provider.dart';
+import 'package:stockit_mobile/presentation/routes/app_routes.dart';
 import 'package:stockit_mobile/presentation/widgets/error_view.dart';
 import 'package:stockit_mobile/presentation/widgets/loading_view.dart';
 import 'package:stockit_mobile/presentation/widgets/main_layout.dart';
@@ -18,12 +19,28 @@ class UserScreen extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Search',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search),
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Search',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 0,
+                  child: IconButton.filled(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.register);
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 16.0),
             const Expanded(child: _UserList()),
