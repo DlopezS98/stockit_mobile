@@ -86,8 +86,8 @@ class _StockitAppState extends State<StockitApp> {
         AppRoutes.login: (context) => Scaffold(body: const LoginScreen()),
         AppRoutes.register: (context) => MultiProvider(
           providers: [
-            Provider<RegisterFormProvider>(create: (_) => getIt<RegisterFormProvider>()),
-            Provider<RolesProvider>(create: (_) => getIt<RolesProvider>()),
+            ChangeNotifierProvider<RegisterFormProvider>(create: (_) => getIt<RegisterFormProvider>()),
+            ChangeNotifierProvider<RolesProvider>(create: (_) => getIt<RolesProvider>()),
           ],
           child: const RegisterScreen(),
         ),
