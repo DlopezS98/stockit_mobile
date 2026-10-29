@@ -11,6 +11,7 @@ class UserModel {
 
   final String _firstName;
   final String _lastName;
+  final String _password;
 
   UserModel({
     required this.id,
@@ -21,13 +22,15 @@ class UserModel {
     required this.roleName,
     required this.createdAt,
   }) : _firstName = '',
-       _lastName = '';
+       _lastName = '',
+       _password = '';
 
   UserModel._createRequest({
     required this.email,
     required this._firstName,
     required this._lastName,
     required this.roleId,
+    required this._password,
   }) : fullName = '',
        id = 0,
        username = '',
@@ -43,6 +46,7 @@ class UserModel {
        id = 0,
        username = '',
        roleName = '',
+       _password = '',
        createdAt = DateTime.now();
 
   static UserModel fromCreateJson({
@@ -79,6 +83,7 @@ class UserModel {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       roleId: roleId,
+      password: password.trim()
     );
   }
 
@@ -124,6 +129,7 @@ class UserModel {
       'firstName': _firstName,
       'lastName': _lastName,
       'roleId': roleId,
+      'password': _password,
     };
   }
 
