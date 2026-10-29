@@ -13,7 +13,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
   bool _obscureText = true;
 
   @override
@@ -22,7 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _lastNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -42,7 +40,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _register() {
     if (!_globalKey.currentState!.validate()) return;
 
-    // TODO: wire up registration once the API supports it.
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Registration is not available yet.')),
     );
@@ -111,32 +108,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   validator: (value) => _required(value, 'password'),
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  controller: _confirmPasswordController,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: _obscureText,
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm password',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock_outline),
-                  ),
-                  validator: (value) {
-                    if (value != _passwordController.text) {
-                      return 'Passwords do not match';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
                 FilledButton(
                   onPressed: _register,
                   child: const Text('Register'),
-                ),
-                const SizedBox(height: 8),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Already have an account? Log in'),
-                ),
+                )
               ],
             ),
           ),
