@@ -1,7 +1,8 @@
 part of '../register_screen.dart';
 
 class _RoleField extends StatelessWidget {
-  const _RoleField();
+  final ValueChanged<int?> onChanged;
+  const _RoleField({required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _RoleField extends StatelessWidget {
             for (var role in roles)
               DropdownMenuItem<int>(value: role.id, child: Text(role.name)),
           ],
-          onChanged: (value) {},
+          onChanged: onChanged,
           validator: (value) => value == null ? 'Please select a role' : null,
         );
       case ViewStatus.error:
