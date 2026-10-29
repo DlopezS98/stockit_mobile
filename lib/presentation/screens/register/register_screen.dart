@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stockit_mobile/core/constants/view_status.dart';
+import 'package:stockit_mobile/data/models/role_model.dart';
 import 'package:stockit_mobile/presentation/providers/register_form_provider.dart';
+import 'package:stockit_mobile/presentation/providers/roles_provider.dart';
 import 'package:stockit_mobile/presentation/widgets/main_layout.dart';
+
+part 'widgets/role_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,6 +22,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<RolesProvider>().loadRoles();
+    });
+  }
 
   @override
   void dispose() {
@@ -114,6 +127,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 validator: (value) => _required(value, 'password'),
               ),
+              const SizedBox(height: 20),
+              _RoleField(),
               const SizedBox(height: 20),
               FilledButton(onPressed: _register, child: const Text('Register')),
             ],
