@@ -4,6 +4,7 @@ import 'package:stockit_mobile/data/repositories/auth_repository.dart';
 import 'package:stockit_mobile/data/repositories/token_repository.dart';
 import 'package:stockit_mobile/data/repositories/user_repository.dart';
 import 'package:stockit_mobile/presentation/providers/auth_provider.dart';
+import 'package:stockit_mobile/presentation/providers/register_form_provider.dart';
 import 'package:stockit_mobile/presentation/providers/user_provider.dart';
 import 'package:stockit_mobile/services/auth_service.dart';
 import 'package:stockit_mobile/services/user_service.dart';
@@ -28,4 +29,5 @@ void setupDependencies() {
   // Register providers
   getIt.registerLazySingleton<AuthProvider>(() => AuthProvider(getIt<AuthService>()));
   getIt.registerFactory<UserProvider>(() => UserProvider(getIt<UserService>()));
+  getIt.registerFactory<RegisterFormProvider>(() => RegisterFormProvider(getIt<AuthService>()));
 }
