@@ -8,6 +8,7 @@ import 'package:stockit_mobile/presentation/routes/app_routes.dart';
 import 'package:stockit_mobile/presentation/screens/login/login_screen.dart';
 import 'package:stockit_mobile/presentation/screens/not_found/not_found_screen.dart';
 import 'package:stockit_mobile/presentation/screens/users/user_screen.dart';
+import 'package:stockit_mobile/presentation/widgets/main_layout.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,34 +34,52 @@ class StockitApp extends StatefulWidget {
 }
 
 class _StockitAppState extends State<StockitApp> {
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   final AuthProvider _authProvider = getIt<AuthProvider>();
+  AuthStatus _routedStatus = AuthStatus.unknown;
 
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   context.read<AuthProvider>().checkSession();
-    // });
     _authProvider.addListener(_onAuthChange);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _onAuthChange();
+    });
   }
 
   void _onAuthChange() {
-    final authStatus = _authProvider.authStatus;
-    if (authStatus == AuthStatus.unknown) return;
+    AuthStatus authStatus = _authProvider.authStatus;
+    NavigatorState? navigator = _navigatorKey.currentState;
+    if (authStatus == _routedStatus || navigator == null) return;
 
-    debugPrint('Auth status changed: $authStatus');
+    _routedStatus = authStatus;
+
+    final route = switch (authStatus) {
+      AuthStatus.authenticated => AppRoutes.users,
+      AuthStatus.unauthenticated => AppRoutes.login,
+      AuthStatus.unknown => AppRoutes.splash,
+    };
+
+    navigator.pushNamedAndRemoveUntil(route, (route) => false);
+  }
+
+  @override
+  void dispose() {
+    _authProvider.removeListener(_onAuthChange);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: _navigatorKey,
       title: 'My First Flutter Application',
       initialRoute: AppRoutes.splash,
       routes: {
-        '/splash': (context) =>
+        AppRoutes.splash: (context) =>
             Scaffold(body: const Center(child: CircularProgressIndicator())),
-        '/login': (context) => const LoginScreen(),
-        '/users': (context) => ChangeNotifierProvider(
+        AppRoutes.login: (context) => MainLayout(child: const LoginScreen()),
+        AppRoutes.users: (context) => ChangeNotifierProvider(
           create: (_) => getIt<UserProvider>()..fetchUsers(),
           child: const UserScreen(),
         ),
