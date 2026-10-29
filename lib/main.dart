@@ -8,7 +8,6 @@ import 'package:stockit_mobile/presentation/routes/app_routes.dart';
 import 'package:stockit_mobile/presentation/screens/login/login_screen.dart';
 import 'package:stockit_mobile/presentation/screens/not_found/not_found_screen.dart';
 import 'package:stockit_mobile/presentation/screens/users/user_screen.dart';
-import 'package:stockit_mobile/presentation/widgets/main_layout.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,7 +77,7 @@ class _StockitAppState extends State<StockitApp> {
       routes: {
         AppRoutes.splash: (context) =>
             Scaffold(body: const Center(child: CircularProgressIndicator())),
-        AppRoutes.login: (context) => MainLayout(child: const LoginScreen()),
+        AppRoutes.login: (context) => Scaffold(body: const LoginScreen()),
         AppRoutes.users: (context) => ChangeNotifierProvider(
           create: (_) => getIt<UserProvider>()..fetchUsers(),
           child: const UserScreen(),
