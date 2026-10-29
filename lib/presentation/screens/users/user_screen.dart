@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stockit_mobile/core/constants/view_status.dart';
 import 'package:stockit_mobile/presentation/providers/user_provider.dart';
 import 'package:stockit_mobile/presentation/widgets/error_view.dart';
 import 'package:stockit_mobile/presentation/widgets/loading_view.dart';
