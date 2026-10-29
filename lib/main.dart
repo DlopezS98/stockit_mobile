@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stockit_mobile/core/di/injection.dart';
 import 'package:stockit_mobile/presentation/providers/auth_provider.dart';
 import 'package:stockit_mobile/presentation/providers/register_form_provider.dart';
+import 'package:stockit_mobile/presentation/providers/roles_provider.dart';
 import 'package:stockit_mobile/presentation/providers/user_provider.dart';
 import 'package:stockit_mobile/presentation/routes/app_routes.dart';
 import 'package:stockit_mobile/presentation/screens/home/home_screen.dart';
@@ -83,8 +84,11 @@ class _StockitAppState extends State<StockitApp> {
       routes: {
         AppRoutes.splash: (context) => const SplashScreen(),
         AppRoutes.login: (context) => Scaffold(body: const LoginScreen()),
-        AppRoutes.register: (context) => ChangeNotifierProvider(
-          create: (_) => getIt<RegisterFormProvider>(),
+        AppRoutes.register: (context) => MultiProvider(
+          providers: [
+            Provider<RegisterFormProvider>(create: (_) => getIt<RegisterFormProvider>()),
+            Provider<RolesProvider>(create: (_) => getIt<RolesProvider>()),
+          ],
           child: const RegisterScreen(),
         ),
         AppRoutes.home: (context) => const HomeScreen(),
