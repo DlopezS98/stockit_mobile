@@ -46,6 +46,8 @@ class ApiClient {
       throw const NetworkException('Request timed out. Please try again later.');
     } on http.ClientException {
       throw const NetworkException();
+    } on Exception catch (e) {
+      throw NetworkException(e.toString());
     }
 
     if (response.statusCode == 401) {
