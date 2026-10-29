@@ -31,4 +31,8 @@ class AuthRepository {
   Future<void> logout(TokenModel token) async {
     await _apiClient.post(ApiConstants.logout, body: token.toLogoutRequest());
   }
+
+  Future<void> register(UserModel user) async {
+    await _apiClient.post(ApiConstants.register, body: user.toCreateJson());
+  }
 }
