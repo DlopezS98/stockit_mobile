@@ -45,4 +45,23 @@ class AuthService {
     await _authRepository.logout(token);
     await _tokenRepository.removeToken();
   }
+
+  Future<void> register({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required int roleId,
+  }) async {
+
+    var user = UserModel.fromCreateJson(
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      roleId: roleId,
+    );
+
+    await _authRepository.register(user);
+  }
 }
