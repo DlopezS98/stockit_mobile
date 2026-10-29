@@ -22,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscureText = true;
+  int _selectedRoleId = 0;
 
   @override
   void initState() {
@@ -61,8 +62,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       lastName: _lastNameController.text,
       email: _emailController.text,
       password: _passwordController.text,
-      roleId: 1,
+      roleId: _selectedRoleId,
     );
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Registration successful!')),
+    );
+
+    _firstNameController.clear();
+    _lastNameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+    _selectedRoleId = 0;
+    Navigator.of(context).pop();
   }
 
   @override
@@ -128,7 +139,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 validator: (value) => _required(value, 'password'),
               ),
               const SizedBox(height: 20),
-              _RoleField(),
+              _RoleField(
+                onChanged: (value) {
+                  _selectedRoleId = value ?? 0;
+                },
+              ),
               const SizedBox(height: 20),
               FilledButton(onPressed: _register, child: const Text('Register')),
             ],
