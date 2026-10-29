@@ -5,8 +5,13 @@ import 'package:stockit_mobile/core/di/injection.dart';
 import 'package:stockit_mobile/presentation/providers/auth_provider.dart';
 import 'package:stockit_mobile/presentation/providers/user_provider.dart';
 import 'package:stockit_mobile/presentation/routes/app_routes.dart';
+import 'package:stockit_mobile/presentation/screens/home/home_screen.dart';
 import 'package:stockit_mobile/presentation/screens/login/login_screen.dart';
 import 'package:stockit_mobile/presentation/screens/not_found/not_found_screen.dart';
+import 'package:stockit_mobile/presentation/screens/profile/profile_screen.dart';
+import 'package:stockit_mobile/presentation/screens/register/register_screen.dart';
+import 'package:stockit_mobile/presentation/screens/settings/settings_screen.dart';
+import 'package:stockit_mobile/presentation/screens/splash/splash_screen.dart';
 import 'package:stockit_mobile/presentation/screens/users/user_screen.dart';
 
 Future<void> main() async {
@@ -54,7 +59,7 @@ class _StockitAppState extends State<StockitApp> {
     _routedStatus = authStatus;
 
     final route = switch (authStatus) {
-      AuthStatus.authenticated => AppRoutes.users,
+      AuthStatus.authenticated => AppRoutes.home,
       AuthStatus.unauthenticated => AppRoutes.login,
       AuthStatus.unknown => AppRoutes.splash,
     };
@@ -75,9 +80,12 @@ class _StockitAppState extends State<StockitApp> {
       title: 'My First Flutter Application',
       initialRoute: AppRoutes.splash,
       routes: {
-        AppRoutes.splash: (context) =>
-            Scaffold(body: const Center(child: CircularProgressIndicator())),
+        AppRoutes.splash: (context) => const SplashScreen(),
         AppRoutes.login: (context) => Scaffold(body: const LoginScreen()),
+        AppRoutes.register: (context) => const RegisterScreen(),
+        AppRoutes.home: (context) => const HomeScreen(),
+        AppRoutes.profile: (context) => const ProfileScreen(),
+        AppRoutes.settings: (context) => const SettingsScreen(),
         AppRoutes.users: (context) => ChangeNotifierProvider(
           create: (_) => getIt<UserProvider>()..fetchUsers(),
           child: const UserScreen(),
