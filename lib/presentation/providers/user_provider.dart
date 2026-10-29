@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stockit_mobile/core/constants/view_status.dart';
 import 'package:stockit_mobile/data/models/user_model.dart';
 import 'package:stockit_mobile/services/user_service.dart';
-
-enum ViewStatus { initial, loading, success, error }
 
 class UserProvider extends ChangeNotifier {
   List<UserModel> _users = [];
