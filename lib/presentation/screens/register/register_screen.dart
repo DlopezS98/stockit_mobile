@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stockit_mobile/presentation/providers/register_form_provider.dart';
 import 'package:stockit_mobile/presentation/widgets/main_layout.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -38,11 +40,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  void _register() {
+  Future<void> _register() async {
     if (!_globalKey.currentState!.validate()) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Registration is not available yet.')),
+    await context.read<RegisterFormProvider>().register(
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      roleId: 1,
     );
   }
 
