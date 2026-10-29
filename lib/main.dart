@@ -23,8 +23,31 @@ Future<void> main() async {
   );
 }
 
-class StockitApp extends StatelessWidget {
+class StockitApp extends StatefulWidget {
   const StockitApp({super.key});
+
+  @override
+  State<StockitApp> createState() => _StockitAppState();
+}
+
+class _StockitAppState extends State<StockitApp> {
+  final AuthProvider _authProvider = getIt<AuthProvider>();
+
+  @override
+  void initState() {
+    super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   context.read<AuthProvider>().checkSession();
+    // });
+    _authProvider.addListener(_onAuthChange);
+  }
+
+  void _onAuthChange() {
+    final authStatus = _authProvider.authStatus;
+    if (authStatus == AuthStatus.unknown) return;
+
+    debugPrint('Auth status changed: $authStatus');
+  }
 
   @override
   Widget build(BuildContext context) {
